@@ -14,8 +14,6 @@ def install_kaggle():
 def download_dataset(competition: str, download_dir: str):
     """Download dataset from Kaggle competition."""
     os.makedirs(download_dir, exist_ok=True)
-
-    # Use subprocess so we can capture errors
     result = subprocess.run(
         ["kaggle", "competitions", "download", "-c", competition, "-p", download_dir],
         capture_output=True,
@@ -38,17 +36,8 @@ def extract_files(download_dir: str):
             print(f"📂 Extracted {file}")
 
 
-def main():
-    """Run the download + extraction pipeline."""
+def pipeline(competition: str, download_dir: str):
+    """Run download and extraction pipeline."""
     install_kaggle()
-
-    competition = "challenges-in-representation-learning-facial-expression-recognition-challenge"
-    download_dir = "./facial_expression_dataset"
-
     download_dataset(competition, download_dir)
     extract_files(download_dir)
-
-
-if __name__ == "__main__":
-    main()
-
